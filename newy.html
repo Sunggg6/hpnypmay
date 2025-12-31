@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>New Year Surprise 2026 🌸</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --pink-primary: #ff4d8d;
+            --pink-light: #ffb3c6;
+            --glass-bg: rgba(255, 240, 245, 0.75);
+            --text-color: #5d2e3e;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            background: radial-gradient(circle, #2d0a1a 0%, #000000 100%);
+            color: #fff;
+            font-family: 'Prompt', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* พลุ */
+        #fireworks-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Countdown */
+        .countdown-container {
+            z-index: 2;
+            margin-bottom: 30px;
+            animation: fadeIn 1.5s ease;
+        }
+
+        #timer {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 500;
+            color: var(--pink-light);
+            text-shadow: 0 0 20px rgba(255, 77, 141, 0.8);
+        }
+
+        .time-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .time-unit {
+            font-size: 0.9rem;
+            color: #ffd6e8;
+            font-weight: 300;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: var(--pink-light);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255,143,177,0.5);
+        }
+
+        /* ปุ่มกด */
+        .open-message-btn {
+            padding: 16px 45px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(45deg, var(--pink-primary), var(--pink-light));
+            color: #fff;
+            z-index: 2;
+            box-shadow: 0 8px 25px rgba(255, 77, 141, 0.5);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 500;
+            display: none; /* ซ่อนจนกว่าจะถึงเวลา */
+        }
+
+        .open-message-btn:hover {
+            transform: scale(1.1) translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 77, 141, 0.7);
+        }
+
+        .lock-message {
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* จดหมาย Overlay */
+        .letter-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(45, 10, 26, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .letter {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            width: 85%;
+            max-width: 420px;
+            padding: 30px;
+            border-radius: 35px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            animation: popUp 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            text-align: left;
+            position: relative;
+        }
+
+        .video-frame {
+            margin-top: 20px;
+            width: 100%;
+            height: 250px;
+            background: #000;
+            border-radius: 20px;
+            border: 4px solid #fff;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .video-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -50px;
+            pointer-events: none;
+            z-index: 15;
+            animation: floatUp 4s ease-in forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) scale(1.5) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes popUp {
+            from { transform: translateY(50px) scale(0.8); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="fireworks-container"></div>
+
+    <div class="countdown-container" id="countdownArea">
+        <h1 id="statusTitle">นับถอยหลังสู่ปี 2026</h1>
+        <div id="timer">
+            <div class="time-box"><span id="days">00</span><span class="time-unit">วัน</span></div>
+            <div class="time-box"><span id="hours">00</span><span class="time-unit">ชม.</span></div>
+            <div class="time-box"><span id="mins">00</span><span class="time-unit">นาที</span></div>
+            <div class="time-box"><span id="secs">00</span><span class="time-unit">วิ</span></div>
+        </div>
+    </div>
+
+    <button id="openBtn" class="open-message-btn" onclick="openLetter()">💌 เปิดจดหมาย</button>
+    <div id="lockMsg" class="lock-message">จดหมายถูกล็อคไว้จนกว่าจะถึงปีใหม่ ✨</div>
+
+    <div class="letter-overlay" id="letterOverlay" onclick="closeLetter()">
+        <div class="letter" onclick="event.stopPropagation()">
+            <h2 style="text-align: center; color: #d81b60; margin-top: 0;">Happy New Year 2026</h2>
+            <p id="text1" style="color: var(--text-color); margin-bottom: 10px;"></p>
+            <p id="text2" style="color: var(--text-color);"></p>
+            
+            <div class="video-frame">
+                <video id="myVideo" loop playsinline>
+                    <source src="hpny.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <div style="text-align: right; margin-top: 20px; color: #c2185b; font-weight: 500;">รักเสมอ 🤍</div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.x/dist/index.umd.js"></script>
+
+    <script>
+        // 1. ตั้งค่าเวลาเป้าหมาย (แก้ปีเป็น 2026 ตามใน Title ของคุณ)
+        // เพื่อทดสอบปุ่มทันที ให้เปลี่ยนเป็นวันที่ในอดีต
+        const targetDate = new Date("Jan 1, 2025 00:00:00").getTime();
+
+        const timerUpdate = setInterval(() => {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+
+            if (diff <= 0) {
+                clearInterval(timerUpdate);
+                showReadyState();
+                return;
+            }
+
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = d.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+            document.getElementById("mins").innerText = m.toString().padStart(2, '0');
+            document.getElementById("secs").innerText = s.toString().padStart(2, '0');
+        }, 1000);
+
+        function showReadyState() {
+            document.getElementById("statusTitle").innerText = "Happy New Year 2026! 🎇";
+            document.getElementById("timer").style.display = "none";
+            document.getElementById("openBtn").style.display = "block";
+            document.getElementById("lockMsg").style.display = "none";
+            initFireworks();
+        }
+
+        // 2. พลุ
+        let fireworks;
+        function initFireworks() {
+            fireworks = new Fireworks.default(document.getElementById('fireworks-container'), {
+                intensity: 20,
+                colors: ['#ff4d8d', '#ffb3c6', '#ffffff', '#ff0066']
+            });
+            fireworks.start();
+        }
+
+        // 3. จดหมายและการจัดการเสียงวิดีโอ
+        function openLetter() {
+            document.getElementById('letterOverlay').style.display = "flex";
+            const video = document.getElementById('myVideo');
+            
+            // ปลดล็อคเสียงและสั่งเล่น
+            video.muted = false; 
+            video.volume = 1.0;
+            
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    // หากเบราว์เซอร์ยังบล็อก ให้เล่นแบบไม่มีเสียงเป็นแผนสำรอง
+                    console.log("Autoplay with sound blocked. Playing muted.");
+                    video.muted = true;
+                    video.play();
+                });
+            }
+
+            typeText();
+            startHearts();
+        }
+
+        function closeLetter() {
+            document.getElementById('letterOverlay').style.display = "none";
+            const video = document.getElementById('myVideo');
+            video.pause();
+        }
+
+        function typeText() {
+            const t1 = "สุขสันต์วันปีใหม่นะที่รัก";
+            const t2 = "ดีใจที่ปีนี้มีเเกอยู่ข้างๆ ขอบคุณสำหรับทุกอย่างนะ";
+            const el1 = document.getElementById('text1');
+            const el2 = document.getElementById('text2');
+            el1.innerHTML = ""; el2.innerHTML = "";
+            
+            let i = 0;
+            const timer1 = setInterval(() => {
+                el1.innerHTML += t1.charAt(i); i++;
+                if (i >= t1.length) {
+                    clearInterval(timer1);
+                    setTimeout(() => {
+                        let j = 0;
+                        const timer2 = setInterval(() => {
+                            el2.innerHTML += t2.charAt(j); j++;
+                            if (j >= t2.length) clearInterval(timer2);
+                        }, 70);
+                    }, 500);
+                }
+            }, 70);
+        }
+
+        function startHearts() {
+            const overlay = document.getElementById('letterOverlay');
+            const icons = ['💖', '💗'];
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.fontSize = (20 + Math.random() * 20) + 'px';
+                    overlay.appendChild(heart);
+                    setTimeout(() => heart.remove(), 4000);
+                }, i * 300);
+            }
+        }
+    </script>
+</body>
+</html>
